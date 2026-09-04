@@ -1,0 +1,23 @@
+{
+  "name": "custom-color-logs",
+  "version": "1.0.0-beta",
+  "description": "",
+  "keywords": [
+    "color"
+  ],
+  "homepage": "https://github.com/RPM-programmer/custom-color-logs#readme",
+  "bugs": {
+    "url": "https://github.com/RPM-programmer/custom-color-logs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RPM-programmer/custom-color-logs.git"
+  },
+  "license": "ISC",
+  "author": "prm-programmer",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
