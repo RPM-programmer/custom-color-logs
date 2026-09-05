@@ -2,10 +2,10 @@
 
 > Добавляет красивые выводы (логи) в терминал.
 
-[![NPM version](https://shields.io)](https://www.npmjs.com/package/custom-color-logs)
-[![License](https://shields.io)](https://github.com)
+[<img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Npm-logo.svg/3840px-Npm-logo.svg.png?utm_source=ru.wikipedia.org&utm_campaign=index&utm_content=thumbnail" height="24" align="center"> На npm](https://github.com/RPM-programmer/custom-color-logs/blob/main/LICENSE)
+[<img src="https://raw.githubusercontent.com/primer/octicons/6220ff87f3ddd923b05ffdac7e2d9cb714213205/icons/law-16.svg" height="24" align="center"> License](https://github.com/RPM-programmer/custom-color-logs/blob/main/LICENSE)
 
-## Установка (Installation)
+## Установка
 
 Установите модуль с помощью npm или yarn:
 
@@ -15,24 +15,14 @@ npm install custom-color-logs
 yarn add custom-color-logs
 ```
 
-## Использование (Usage)
+## Использование
 
-Добавьте пример быстрого старта с простым кодом:
+Ипользование:
 
 ```javascript
-const { myFunctions } = require('custom-color-logs');
-
-// Простой пример вызова функции
-const result = myFunctions('Аргумент');
-console.log(result);
+const logger = require('custom-color-logs');
 ```
 
-## API / Документация (Options)
-
-| Параметр | Тип | По умолчанию | Описание |
-| :--- | :--- | :--- | :--- |
-| `param1` | `String` | `'default'` | Описание параметра функции. |
-| `enable` | `Boolean` | `false` | Описание логического флага. |
 
 ## Разработка и тестирование (Development)
 
@@ -40,11 +30,12 @@ console.log(result);
 
 ```bash
 git clone https://github.com/RPM-programmer/custom-color-logs.git
-cd my-npm-package
+cd custom-color-logs
 npm install custom-color-logs
-npm test
 ```
 
 ## Лицензия (License)
 
-[MIT](LICENSE) © [Ваше Имя / Компания]
+[MIT](LICENSE) © RPM-programmer
+* [На GitHub](https://github.com/RPM-programmer)
+* [На npm](https://www.npmjs.com/~prm-programmer)
