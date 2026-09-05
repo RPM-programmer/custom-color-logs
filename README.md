@@ -2,7 +2,7 @@
 
 > Добавляет красивые выводы (логи) в терминал.
 
-[![NPM version](https://shields.io)](https://npmjs.com)
+[![NPM version](https://shields.io)](https://www.npmjs.com/package/custom-color-logs)
 [![License](https://shields.io)](https://github.com)
 
 ## Установка (Installation)
@@ -10,9 +10,9 @@
 Установите модуль с помощью npm или yarn:
 
 ```bash
-npm install my-npm-package
+npm install custom-color-logs
 # или
-yarn add my-npm-package
+yarn add custom-color-logs
 ```
 
 ## Использование (Usage)
@@ -20,7 +20,7 @@ yarn add my-npm-package
 Добавьте пример быстрого старта с простым кодом:
 
 ```javascript
-const { myFunctions } = require('my-npm-package');
+const { myFunctions } = require('custom-color-logs');
 
 // Простой пример вызова функции
 const result = myFunctions('Аргумент');
