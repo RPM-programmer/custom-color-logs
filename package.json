@@ -1,6 +1,6 @@
 {
   "name": "custom-color-logs",
-  "version": "1.0.0-beta",
+  "version": "1.0.0",
   "description": "",
   "keywords": [
     "color"
@@ -17,7 +17,8 @@
   "author": "prm-programmer",
   "type": "commonjs",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "dependencies": {
+    "chalk-palette": "^1.5.5",
+    "dotenv": "^17.4.2"
   }
 }
