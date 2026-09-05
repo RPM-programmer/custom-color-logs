@@ -31,5 +31,12 @@ module.exports = {
     AND: safeColor(process.env.AND_COLOR, process.env.AND),
     TO: safeColor(process.env.TO_COLOR, process.env.TO),
     MODULE_NAME: safeColor(process.env.MODULE_TEXT_COLOR, process.env.MODULE_TEXT),
-    CUSTOM_START_MESSAGE: safeColor(process.env.COLOR, process.env.CUSTOM_MODULE_START_MESSAGE)
+    CUSTOM_START_MESSAGE: safeColor(process.env.COLOR, process.env.CUSTOM_MODULE_START_MESSAGE),
+    FUNCTION_INFO: safeColor(process.env.FUNCTION_INFO_COLOR , process.env.FUNCTION_INFO),
+    FUNCTION_STATUS: safeColor(process.env.STATUS_COLOR , process.env.STATUS),
+    LOG: safeColor(process.env.LOG_COLOR, process.env.LOG),
+    POSITIVE: safeColor(process.env.POSITIVE_COLOR, process.env.POSITIVE),
+    NEGATIVE: safeColor(process.env.NEGATIVE_COLOR, process.env.NEGATIVE),
+    NEGATIVE_SEND: safeColor(process.env.NEGATIVE_SEND_COLOR, process.env.NEGATIVE_SEND),
+    POSITIVE_SEND: safeColor(process.env.POSITIVE_SEND_COLOR, process.env.POSITIVE_SEND),
 };
