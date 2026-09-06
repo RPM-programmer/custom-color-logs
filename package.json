@@ -1,6 +1,6 @@
 {
   "name": "custom-color-logs",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "description": "Продвинутая и гибкая система логирования для Node.js с безопасной обработкой цвета окружения.",
   "keywords": [
     "color",
