@@ -20,7 +20,6 @@
   "type": "commonjs",
   "main": "index.js",
   "dependencies": {
-    "chalk-palette": "^1.5.5",
     "dotenv": "^17.4.2"
   }
 }

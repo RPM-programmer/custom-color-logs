@@ -1,7 +1,7 @@
 require("./patch.js"); 
 
 const process = require("process"); 
-const chalk = require("chalk-palette"); 
+const chalk = require("./chalk-palette.js"); 
 const converter = require("./converter.js"); 
 const fs = require('fs'); 
 const path = require('path'); 

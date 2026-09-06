@@ -1,6 +1,6 @@
 require("dotenv").config();
 const process = require("process");
-const chalk = require("chalk-palette");
+const chalk = require("./chalk-palette.js");
 
 if (process.env.SHOW_TIME_AT_LOG === "true") {
     const originalLog = console.log;
