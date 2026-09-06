@@ -90,8 +90,10 @@ class BaseLogger {
 
 // --- СБОРКА СТАРОГО ИНТЕРФЕЙСА ДЛЯ КЛАССА print ---
 
+// --- СБОРКА СТАРОГО ИНТЕРФЕЙСА ДЛЯ КЛАССА print ---
+
 const components = {
-    Server: 'SERVER', // Для Server префикс будет двойным (SERVER->SERVER), как в вашем оригинале
+    Server: 'SERVER', 
     Socket: 'SOCKET',
     Writter: 'WRITTER',
     Database: 'DATABASE',
@@ -104,14 +106,18 @@ class print {}
 Object.entries(components).forEach(([className, targetKey]) => {
     const logger = new BaseLogger(targetKey);
     
-    // Перенаправляем вызовы статических методов на инстанс базового логгера
-    const methods = ['Info', 'Error', 'Warn', 'FunctionInfo', 'FunctionStatus', 'FunctionPrint', 'ServerFuctionPositivePerfomance', 'ServerFunctionNegativePerfomance'];
+    // ДОБАВИЛИ: Теперь здесь есть и правильное имя 'ServerFunctionPositivePerfomance'
+    const methods = [
+        'Info', 'Error', 'Warn', 'FunctionInfo', 'FunctionStatus', 'FunctionPrint', 
+        'ServerFuctionPositivePerfomance', 'ServerFunctionPositivePerfomance', 'ServerFunctionNegativePerfomance'
+    ];
     
     methods.forEach(method => {
         const oldMethodName = method.startsWith('ServerF') ? method.replace('Server', className) : `${className}${method}`;
         print[oldMethodName] = (...args) => logger[method](...args);
     });
 });
+
 
 // Добавляем специфичные методы только для Nodemailer, которых нет у других
 print.NodemailerFuctionPositiveSending = function(gmail) {
