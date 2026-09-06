@@ -1,15 +1,19 @@
 # 🚀 custom-color-logs
 
-> Продвинутая и гибкая система логирования для Node.js, которая превращает скучный вывод в терминале в структурированный и стильный инструмент мониторинга.
+> Продвинутая и гибкая система логирования для Node.js, которая превращает скучный вывод в терминале в структурированный, полностью безопасный и стильный инструмент мониторинга.
 
-[![npm version](https://shields.io)](https://npmjs.com)
-[<img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Npm-logo.svg/3840px-Npm-logo.svg.png" height="20" align="center"> На npm](https://npmjs.com)
-[<img src="https://raw.githubusercontent.com/primer/octicons/6220ff87f3ddd923b05ffdac7e2d9cb714213205/icons/law-16.svg" height="20" align="center"> License](LICENSE)
+
+[<img src="https://img.icons8.ru/?size=100&id=24895&format=png&color=000000" height="60" align="center"> npm versions](https://www.npmjs.com/package/custom-color-logs?activeTab=versions)
+[<img src="https://img.icons8.ru/?size=100&id=24895&format=png&color=000000" height="60" align="center"> На npm](https://www.npmjs.com/package/custom-color-logs)
+[<img src="https://img.icons8.ru/?size=100&id=12599&format=png&color=000000" height="60" align="center"> На GitHub](LICENSE)
+[<img src="https://img.icons8.ru/?size=100&id=dvsOEzqniDma&format=png&color=000000" height="60" align="center"> License](LICENSE)
 
 ---
 
-## ✨ Особенности
+## ✨ Особенности v2.0.0
 * 🎨 **Полная кастомизация:** Тонкая настройка цветов (через `chalk-palette`) и префиксов для каждого системного компонента.
+* 🛡️ **Абсолютная отказоустойчивость:** Больше никаких падений `TypeError: chalk[...] is not a function`. Если цвет в `.env` не задан, логгер безопасно выведет стандартный текст.
+* 🔤 **Регистронезависимость:** Цвета автоматически преобразуются в CamelCase (например, `skyblue` станет `SkyBlue`), как требует `chalk-palette`.
 * 📦 **Компонентная структура:** Изолированные пространства имен логов для `Server`, `Socket`, `Writter`, `Database` и `Nodemailer`.
 * ⚡ **Performance-трекинг:** Специальные методы для красивой индикации быстрой или медленной работы функций.
 * 🛡️ **Безопасность процессов:** Автоматический перехват критических ошибок `uncaughtException` и `unhandledRejection` с очисткой трейса от лишнего «мусора» Node.js.
@@ -29,55 +33,67 @@ yarn add custom-color-logs
 
 ---
 
+## 🚨 Мажорные изменения (Миграция с v1.x на v2.x)
+
+В версии **v2.0.0** были полностью вычищены исторические опечатки в динамических методах. Если вы использовали их, обновите названия в своём коде:
+
+| Было в v1.x (С ошибками) | Стало в v2.x (Правильно) |
+| :--- | :--- |
+| `print.XFuctionPositivePerfomance` | `print.XFunctionPositivePerformance` |
+| `print.XFunctionNegativePerfomance` | `print.XFunctionNegativePerformance` |
+| `print.NodemailerFuctionPositiveSending` | `print.NodemailerFunctionPositiveSending` |
+
+*(Где `X` — имя компонента: `Server`, `Socket`, `Database`, `Writter`, `Nodemailer`).*
+
+---
+
 ## 💻 Пример использования и Тестирование
 
 Для проверки того, как ваши стили и палитры выглядят вживую, вы можете использовать готовый скрипт-тестер. Подключите конфигурацию `.env` и выполните следующий код:
 
 ```javascript
-const path = require('path');
-const fs = require('fs');
-
-// 1. Принудительно загружаем ваш .env, чтобы убедиться, что переменные доступны
+// загрузка стилей из .env
 require("dotenv").config();
-
-// 2. Подключаем логгер
+// загрузка модуля
 const { print } = require("custom-color-logs");
 
-// Небольшая задержка, чтобы системные логи из вашего файла успели напечататься первыми
-setTimeout(() => {
-    console.log("\n" + "=".repeat(20) + " ТЕСТ ВАШИХ СТИЛЕЙ ИЗ .ENV " + "=".repeat(20) + "\n");
+// использавоние:
 
-    // --- БАЗОВЫЕ СТАТУСЫ ---
-    console.log(print.ServerInfo("Тестовое информационное сообщение сервера"));
-    console.log(print.ServerWarn("Предупреждение: превышен лимит запросов"));
-    console.log(print.ServerError({ message: "Критический сбой базы данных" }));
-    console.log("-".repeat(60));
 
-    // --- ФУНКЦИИ И СТАТУСЫ ---
-    console.log(print.DatabaseFunctionInfo("authCheck", "Проверка сессии пользователя"));
-    console.log(print.DatabaseFunctionStatus("authCheck", "Успешная авторизация (ID: 777)"));
-    console.log(print.SocketFunctionPrint("emitEvent", "Отправка пакета всем активным клиентам"));
-    console.log("-".repeat(60));
+// Информация о состоянии
+// информация
+console.log(print.ServerInfo("Тестовое информационное сообщение сервера"));
+// предупреждение
+console.log(print.ServerWarn("Предупреждение: превышен лимит запросов"));
+// ошибка
+console.log(print.ServerError({ message: "Критический сбой базы данных" }));
 
-    // --- ПЕРФОРМАНС ---
-    console.log(print.ServerFuctionPositivePerfomance("API_Request", "Время ответа в пределах нормы: 45ms"));
-    console.log(print.ServerFunctionNegativePerfomance("DB_Backup", "ВНИМАНИЕ! Резервное копирование заняло 12.4с"));
-    console.log("-".repeat(60));
 
-    // --- СУГУБО NODEMAILER ---
-    console.log(print.NodemailerFuctionPositiveSending("success-recipient@domain.com"));
-    console.log(print.NodemailerFunctionNegativeSending("failed-mailbox@domain.com"));
+// Информация от функции
+// информация от функции
+console.log(print.DatabaseFunctionInfo("authCheck", "Проверка сессии пользователя"));
+// статус выполнения функции
+console.log(print.DatabaseFunctionStatus("authCheck", "Успешная авторизация (ID: 777)"));
+// вывод функции
+console.log(print.SocketFunctionPrint("emitEvent", "Отправка пакета всем активным клиентам"));
+// положительное выполнение функции
+console.log(print.ServerFunctionPositivePerformance("API_Request", "Время ответа в пределах нормы: 45ms"));
+// отрицательное выполнение функции
+console.log(print.ServerFunctionNegativePerformance("DB_Backup", "ВНИМАНИЕ! Резервное копирование заняло 12.4с"));
 
-    console.log("\n" + "=".repeat(23) + " КОНЕЦ ТЕСТИРОВАНИЯ " + "=".repeat(23) + "\n");
 
-}, 100);
+// NODEMAILER
+// положительная отправка (письмо доставленно)
+console.log(print.NodemailerFunctionPositiveSending("success-recipient@domain.com"));
+// отрицательная отправка (письмо не отправленно)
+console.log(print.NodemailerFunctionNegativeSending("failed-mailbox@domain.com"));
 ```
 
 ---
 
 ## 🛠 Гибкая настройка через `.env`
 
-Логгер автоматически считывает настройки оформления из вашего файла окружения. Вы можете менять префиксы статусов и цвета (например, `Blue`, `Orange`, `Red`, `Lime`, `Green`, `Gray`):
+Логгер автоматически считывает настройки оформления из вашего файла окружения. Вы можете менять префиксы статусов и любые цвета (регистр больше не важен — логгер сам поймет и `blue`, и `Blue`):
 
 ```ini
 # --- Управление поведением логов ---
@@ -93,6 +109,7 @@ WARNING                                      = "@warn"
 WARNING_COLOR                                = "Orange"
 ERROR                                        = "@error"
 ERROR_COLOR                                  = "Red"
+TIME_COLOR                                   = "White"
 
 # --- Функции и логика компонентов ---
 NAME_FUNCTION_COLOR                          = "Lime"
