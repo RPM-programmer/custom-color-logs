@@ -5,10 +5,12 @@ const process = require('process');
 // Определяем путь к .env файлу в корне проекта пользователя
 const envPath = path.resolve(process.cwd(), '.env');
 
-// Дефолтный блок настроек, который будет записан, если параметров логгера нет
+// Дефолтный блок настроек с уникальным маркером безопасности
 const defaultEnvContent = `# ==============================================================================
 # 🎨 CUSTOM-COLOR-LOGS CONFIGURATION (v2.0.0)
 # ==============================================================================
+CUSTOM_COLOR_LOGS_INITIALIZED                = true
+
 SHOW_START_LOG                               = true
 SHOW_MODULE_LOGS                             = false
 SHOW_END_LOG                                 = true
@@ -80,25 +82,29 @@ CUSTOM_MODULES_STOP_MESSAGE_COLOR           = Gray
 function initializeEnvironment() {
     try {
         if (!fs.existsSync(envPath)) {
-            // Если .env файла нет вообще, создаем его с нашими дефолтными настройками
+            // Если .env файла нет совсем — создаем и записываем дефолтный конфиг с тегом
             fs.writeFileSync(envPath, defaultEnvContent, 'utf8');
         } else {
-            // Если файл есть, проверяем, добавлены ли уже настройки логгера
+            // Если файл есть, читаем его содержимое
             const currentEnv = fs.readFileSync(envPath, 'utf8');
-            if (!currentEnv.includes('CUSTOM-COLOR-LOGS CONFIGURATION') && !currentEnv.includes('INFO_COLOR')) {
-                // Если наших настроек нет, аккуратно дописываем их в конец файла, не ломая чужие переменные
-                fs.appendFileSync(envPath, `\n\n${defaultEnvContent}`, 'utf8');
+            
+            // СТРОГАЯ ПРОВЕРКА ТЕГА: если маркер инициализации уже внутри файла, полностью выходим
+            if (currentEnv.includes('CUSTOM_COLOR_LOGS_INITIALIZED')) {
+                require("dotenv").config({ path: envPath });
+                return;
             }
+            
+            // Если тега нет (конфиг логгера еще не добавлялся), аккуратно дописываем в конец
+            fs.appendFileSync(envPath, `\n\n${defaultEnvContent}`, 'utf8');
         }
     } catch (err) {
-        console.error('⚠️ [custom-color-logs] Не удалось автоматически обновить .env:', err.message);
+        console.error('⚠️ [custom-color-logs] Не удалось проверить или обновить .env:', err.message);
     }
 
-    // Принудительно загружаем dotenv по правильному пути, чтобы переменные попали в process.env
+    // Загружаем обновленные или созданные переменные в process.env
     require("dotenv").config({ path: envPath });
 }
 
-// Запускаем инициализацию при подключении этого файла
 initializeEnvironment();
 
 module.exports = { envPath };

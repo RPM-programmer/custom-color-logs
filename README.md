@@ -2,7 +2,6 @@
 
 > Продвинутая и гибкая система логирования для Node.js, которая превращает скучный вывод в терминале в структурированный, полностью безопасный и стильный инструмент мониторинга.
 
-
 [<img src="https://img.icons8.ru/?size=100&id=24895&format=png&color=000000" height="60" align="center"> npm versions](https://www.npmjs.com/package/custom-color-logs?activeTab=versions)
 [<img src="https://img.icons8.ru/?size=100&id=24895&format=png&color=000000" height="60" align="center"> На npm](https://www.npmjs.com/package/custom-color-logs)
 [<img src="https://img.icons8.ru/?size=100&id=12599&format=png&color=000000" height="60" align="center"> На GitHub](LICENSE)
@@ -11,13 +10,14 @@
 ---
 
 ## ✨ Особенности v2.0.0
+* ⚙️ **Автогенерация конфигурации:** Модуль сам создаёт файл `.env` с красивой палитрой при первом запуске или аккуратно дописывает настройки в конец вашего существующего `.env`.
+* 🔒 **Защита от дублирования:** Благодаря уникальному внутреннему маркеру безопасности `CUSTOM_COLOR_LOGS_INITIALIZED`, конфигурационные строки записываются строго один раз и не дублируются при перезапусках.
 * 🎨 **Полная кастомизация:** Тонкая настройка цветов (через `chalk-palette`) и префиксов для каждого системного компонента.
 * 🛡️ **Абсолютная отказоустойчивость:** Больше никаких падений `TypeError: chalk[...] is not a function`. Если цвет в `.env` не задан, логгер безопасно выведет стандартный текст.
 * 🔤 **Регистронезависимость:** Цвета автоматически преобразуются в CamelCase (например, `skyblue` станет `SkyBlue`), как требует `chalk-palette`.
 * 📦 **Компонентная структура:** Изолированные пространства имен логов для `Server`, `Socket`, `Writter`, `Database` и `Nodemailer`.
 * ⚡ **Performance-трекинг:** Специальные методы для красивой индикации быстрой или медленной работы функций.
 * 🛡️ **Безопасность процессов:** Автоматический перехват критических ошибок `uncaughtException` и `unhandledRejection` с очисткой трейса от лишнего «мусора» Node.js.
-* 💾 **Гарантия логирования:** Синхронная запись критических ошибок в файл `./logs/errors.log` до того, как упадет процесс.
 
 ---
 
@@ -49,53 +49,55 @@ yarn add custom-color-logs
 
 ## 💻 Пример использования и Тестирование
 
-Для проверки того, как ваши стили и палитры выглядят вживую, вы можете использовать готовый скрипт-тестер. Подключите конфигурацию `.env` и выполните следующий код:
+Просто подключите логгер в ваш проект. При первом запуске в корне вашего приложения автоматически сгенерируются все необходимые `.env` параметры:
 
 ```javascript
-// загрузка стилей из .env
+// Загрузка стилей из .env
 require("dotenv").config();
-// загрузка модуля
+// Загрузка модуля
 const { print } = require("custom-color-logs");
 
-// использавоние:
+// Использование:
 
+// --- ИНФОРМАЦИЯ О СОСТОЯНИИ ---
+// Информация
+print.ServerInfo("Тестовое информационное сообщение сервера");
+// Предупреждение
+print.ServerWarn("Предупреждение: превышен лимит запросов");
+// Ошибка
+print.ServerError({ message: "Критический сбой базы данных" });
 
-// Информация о состоянии
-// информация
-console.log(print.ServerInfo("Тестовое информационное сообщение сервера"));
-// предупреждение
-console.log(print.ServerWarn("Предупреждение: превышен лимит запросов"));
-// ошибка
-console.log(print.ServerError({ message: "Критический сбой базы данных" }));
-
-
+// --- ИНФОРМАЦИЯ ОТ ФУНКЦИЙ ---
 // Информация от функции
-// информация от функции
-console.log(print.DatabaseFunctionInfo("authCheck", "Проверка сессии пользователя"));
-// статус выполнения функции
-console.log(print.DatabaseFunctionStatus("authCheck", "Успешная авторизация (ID: 777)"));
-// вывод функции
-console.log(print.SocketFunctionPrint("emitEvent", "Отправка пакета всем активным клиентам"));
-// положительное выполнение функции
-console.log(print.ServerFunctionPositivePerformance("API_Request", "Время ответа в пределах нормы: 45ms"));
-// отрицательное выполнение функции
-console.log(print.ServerFunctionNegativePerformance("DB_Backup", "ВНИМАНИЕ! Резервное копирование заняло 12.4с"));
+print.DatabaseFunctionInfo("authCheck", "Проверка сессии пользователя");
+// Статус выполнения функции
+print.DatabaseFunctionStatus("authCheck", "Успешная авторизация (ID: 777)");
+// Вывод функции
+print.SocketFunctionPrint("emitEvent", "Отправка пакета всем активным клиентам");
+// Положительное выполнение функции
+print.ServerFunctionPositivePerformance("API_Request", "Время ответа в пределах нормы: 45ms");
+// Отрицательное выполнение функции
+print.ServerFunctionNegativePerformance("DB_Backup", "ВНИМАНИЕ! Резервное копирование заняло 12.4с");
 
-
-// NODEMAILER
-// положительная отправка (письмо доставленно)
-console.log(print.NodemailerFunctionPositiveSending("success-recipient@domain.com"));
-// отрицательная отправка (письмо не отправленно)
-console.log(print.NodemailerFunctionNegativeSending("failed-mailbox@domain.com"));
+// --- NODEMAILER ---
+// Положительная отправка (письмо доставлено)
+print.NodemailerFunctionPositiveSending("success-recipient@domain.com");
+// Отрицательная отправка (письмо не отправлено)
+print.NodemailerFunctionNegativeSending("failed-mailbox@domain.com");
 ```
 
 ---
 
-## 🛠 Гибкая настройка через `.env`
+## 🛠 Конфигурация в `.env`
 
-Логгер автоматически считывает настройки оформления из вашего файла окружения. Вы можете менять префиксы статусов и любые цвета (регистр больше не важен — логгер сам поймет и `blue`, и `Blue`):
+После первого запуска в вашем `.env` появится следующий блок настроек. Вы можете менять префиксы статусов и любые цвета (логгер сам приведёт их к нужному регистру):
 
 ```ini
+# ==============================================================================
+# 🎨 CUSTOM-COLOR-LOGS CONFIGURATION (v2.0.0)
+# ==============================================================================
+CUSTOM_COLOR_LOGS_INITIALIZED                = true
+
 # --- Управление поведением логов ---
 SHOW_START_LOG                               = true
 SHOW_MODULE_LOGS                             = false
@@ -117,6 +119,8 @@ CUSTOM_TEXT_TO_FUNCTION_COLOR                = "Gray"
 POSITIVE_COLOR                               = "Green"
 NEGATIVE_COLOR                               = "Orange"
 ```
+
+> 💡 **Совет:** Если вы хотите вернуть настройки по умолчанию, просто удалите этот блок настроек из файла `.env` (при следующем запуске он сгенерируется заново).
 
 ---
 
@@ -143,12 +147,12 @@ Error: Критический сбой базы данных
 ```bash
 git clone https://github.com/RPM-programmer/custom-color-logs.git
 cd custom-color-logs
-npm install
+npm install custom-color-logs
 node test.js
 ```
 
 ## 📄 Лицензия (License)
 
 [MIT](LICENSE) © RPM-programmer
-* [На GitHub](https://github.com/RPM-programmer)
-* [На npm](https://www.npmjs.com/~prm-programmer)
+* [На GitHub](https://github.com/RPM-programmer/custom-color-logs/blame/main/LICENSE)
+* [На npm](https://www.npmjs.com/package/custom-color-logs/v/2.0.0-beta.3?activeTab=code)
