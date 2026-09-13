@@ -1,158 +1,154 @@
-# 🚀 custom-color-logs
+# 🎨 custom-color-logs (v3.0.0)
 
-> Продвинутая и гибкая система логирования для Node.js, которая превращает скучный вывод в терминале в структурированный, полностью безопасный и стильный инструмент мониторинга.
+> Продвинутая, легковесная и абсолютно отказоустойчивая (**Poka-yoke**) система логирования для Node.js с динамической кастомизацией цветов через `.env`.
 
 [<img src="https://img.icons8.ru/?size=100&id=24895&format=png&color=000000" height="60" align="center"> npm versions](https://www.npmjs.com/package/custom-color-logs?activeTab=versions)
-[<img src="https://img.icons8.ru/?size=100&id=24895&format=png&color=000000" height="60" align="center"> На npm](https://www.npmjs.com/package/custom-color-logs)
+[<img src="https://img.icons8.ru/?size=100&id=24895&format=png&color=000000" height="60" align="center"> На npm](https://www.npmjs.com/package/custom-color-logs/v3.0.0)
 [<img src="https://img.icons8.ru/?size=100&id=12599&format=png&color=000000" height="60" align="center"> На GitHub](LICENSE)
 [<img src="https://img.icons8.ru/?size=100&id=dvsOEzqniDma&format=png&color=000000" height="60" align="center"> License](LICENSE)
 
 ---
 
-## ✨ Особенности v2.0.0
-* ⚙️ **Автогенерация конфигурации:** Модуль сам создаёт файл `.env` с красивой палитрой при первом запуске или аккуратно дописывает настройки в конец вашего существующего `.env`.
-* 🔒 **Защита от дублирования:** Благодаря уникальному внутреннему маркеру безопасности `CUSTOM_COLOR_LOGS_INITIALIZED`, конфигурационные строки записываются строго один раз и не дублируются при перезапусках.
-* 🎨 **Полная кастомизация:** Тонкая настройка цветов (через `chalk-palette`) и префиксов для каждого системного компонента.
-* 🛡️ **Абсолютная отказоустойчивость:** Больше никаких падений `TypeError: chalk[...] is not a function`. Если цвет в `.env` не задан, логгер безопасно выведет стандартный текст.
-* 🔤 **Регистронезависимость:** Цвета автоматически преобразуются в CamelCase (например, `skyblue` станет `SkyBlue`), как требует `chalk-palette`.
-* 📦 **Компонентная структура:** Изолированные пространства имен логов для `Server`, `Socket`, `Writter`, `Database` и `Nodemailer`.
-* ⚡ **Performance-трекинг:** Специальные методы для красивой индикации быстрой или медленной работы функций.
-* 🛡️ **Безопасность процессов:** Автоматический перехват критических ошибок `uncaughtException` и `unhandledRejection` с очисткой трейса от лишнего «мусора» Node.js.
+## ⚠️ ВАЖНО: Что нового в v3.0.0 (Breaking Changes)
+
+Если вы обновляетесь с версии `1.x.x` или `2.x.x`, ваш код может сломаться. Мы полностью изменили архитектуру для повышения производительности и безопасности:
+1. **Отдельный объект вместо класса:** Модуль `print` теперь является **чистым объектом**, а не классом. Больше не нужно использовать `static` или создавать экземпляры.
+2. **Прямая передача объектов:** Больше не нужно делать `JSON.stringify(obj)` перед отправкой в логгер. Передавайте объекты, массивы и нативные ошибки `new Error()` напрямую!
+3. **Умный перехват `console.log`:** Логгер автоматически внедряется в стандартную консоль и раскрашивает сторонние логи в цвет по умолчанию, бережно обходя префиксы `print`.
+
+---
+
+## ✨ Ключевые фичи
+
+* 🚀 **Умная раскраска объектов:** Автоматически парсит объекты и массивы. Ключи (properties) и значения (values) красятся в РАЗНЫЕ цвета, заданные в `.env`.
+* 🪵 **Иерархия префиксов:** Логи автоматически группируются по красивой структуре (`SYSTEM:SERVER:DATABASE:`, `NODE:NODE-MODULES:[ LOGGER ]`).
+* 🔒 **Абсолютная отказоустойчивость (Poka-yoke):** Если вы опечатаетесь в названии цвета в файле `.env` (например, напишете `Reddd` вместо `Red` или оставите лишние пробелы), приложение **не упадет**. Логгер автоматически применит безопасный дефолтный цвет.
 
 ---
 
 ## 📦 Установка
 
-Вы можете установить модуль с помощью вашего любого пакетного менеджера:
-
 ```bash
 npm install custom-color-logs
-# или
+# или 
 yarn add custom-color-logs
 ```
 
 ---
 
-## 🚨 Мажорные изменения (Миграция с v1.x на v2.x)
+## 🛠 Настройка через `.env`
 
-В версии **v2.0.0** были полностью вычищены исторические опечатки в динамических методах. Если вы использовали их, обновите названия в своём коде:
+При первом запуске логгер автоматически создаст или дополнит ваш файл `.env` дефолтными настройками. Вы можете изменить их в любой момент:
 
-| Было в v1.x (С ошибками) | Стало в v2.x (Правильно) |
-| :--- | :--- |
-| `print.XFuctionPositivePerfomance` | `print.XFunctionPositivePerformance` |
-| `print.XFunctionNegativePerfomance` | `print.XFunctionNegativePerformance` |
-| `print.NodemailerFuctionPositiveSending` | `print.NodemailerFunctionPositiveSending` |
+```env
+# Активация логов и времени
+SHOW_START_LOG=true
+SHOW_MODULE_LOGS=true
+SHOW_TIME_AT_LOG=true
 
-*(Где `X` — имя компонента: `Server`, `Socket`, `Database`, `Writter`, `Nodemailer`).*
+# Главный префикс и его цвет
+PREFIX_TEXT="SYSTEM"
+PREFIX_TEXT_COLOR=Blue
+
+# Настройка умного окрашивания объектов (Фича v3.0.0!)
+KEY_COLOR=Magenta      # Цвет для ключей (например, name, age)
+VALUE_COLOR=Yellow     # Цвет для значений (например, "Иван", 25)
+
+# Цвета для обычного текста и времени
+COLOR=Gray
+TIME_COLOR=White
+
+# Системные теги
+INFO_COLOR=Blue
+WARNING_COLOR=Orange
+ERROR_COLOR=Red
+ERROR_STACK_COLOR=Red
+NAME_FUNCTION_COLOR=Lime
+CUSTOM_TEXT_TO_FUNCTION_COLOR=Gray
+```
 
 ---
 
-## 💻 Пример использования и Тестирование
+## 🚀 Примеры использования
 
-Просто подключите логгер в ваш проект. При первом запуске в корне вашего приложения автоматически сгенерируются все необходимые `.env` параметры:
-
+### 1. Импорт логгера
 ```javascript
-// Загрузка стилей из .env
-require("dotenv").config();
-// Загрузка модуля
+// Больше не нужно деструктурировать класс! Просто забираем объект print
 const { print } = require("custom-color-logs");
+```
 
-// Использование:
+### 2. Базовые логи
+```javascript
+print.ServerInfo("Информационное сообщение сервера"); 
+// Выведет: [12:00:00] SYSTEM:SERVER: @info Информационное сообщение (серым цветом)
 
-// --- ИНФОРМАЦИЯ О СОСТОЯНИИ ---
-// Информация
-print.ServerInfo("Тестовое информационное сообщение сервера");
-// Предупреждение
-print.ServerWarn("Предупреждение: превышен лимит запросов");
-// Ошибка
-print.ServerError({ message: "Критический сбой базы данных" });
+print.ServerWarn("Превышен лимит запросов");
+// Выведет оранжевым цветом
 
-// --- ИНФОРМАЦИЯ ОТ ФУНКЦИЙ ---
-// Информация от функции
+print.ServerError(new Error("Сбой базы данных"));
+// Безопасно выведет message ошибки красным цветом
+```
+
+### 3. Логирование внутри функций и производительность
+```javascript
 print.DatabaseFunctionInfo("authCheck", "Проверка сессии пользователя");
-// Статус выполнения функции
 print.DatabaseFunctionStatus("authCheck", "Успешная авторизация (ID: 777)");
-// Вывод функции
-print.SocketFunctionPrint("emitEvent", "Отправка пакета всем активным клиентам");
-// Положительное выполнение функции
-print.ServerFunctionPositivePerformance("API_Request", "Время ответа в пределах нормы: 45ms");
-// Отрицательное выполнение функции
-print.ServerFunctionNegativePerformance("DB_Backup", "ВНИМАНИЕ! Резервное копирование заняло 12.4с");
+print.ServerFunctionPositivePerformance("API_Request", "Время ответа: 45ms");
+```
 
-// --- NODEMAILER ---
-// Положительная отправка (письмо доставлено)
-print.NodemailerFunctionPositiveSending("success-recipient@domain.com");
-// Отрицательная отправка (письмо не отправлено)
-print.NodemailerFunctionNegativeSending("failed-mailbox@domain.com");
+### 4. Умный вывод объектов
+```javascript
+const user = {
+    name: "Иван",
+    age: 25,
+    roles: ["admin", "user"],
+    meta: { active: true }
+};
+
+// Передаем объект НАПРЯМУЮ в любой метод
+print.DatabaseInfo(user);
+// В консоли развернется красивый JSON, где 'name' будет Magenta, а '"Иван"' - Yellow!
 ```
 
 ---
 
-## 🛠 Конфигурация в `.env`
+## 🟦 Поддержка TypeScript
 
-После первого запуска в вашем `.env` появится следующий блок настроек. Вы можете менять префиксы статусов и любые цвета (логгер сам приведёт их к нужному регистру):
+Начиная с версии `v3.0.0`, библиотека поставляется со встроенными и полностью обновленными декларациями типов (`index.d.ts`). 
 
-```ini
-# ==============================================================================
-# 🎨 CUSTOM-COLOR-LOGS CONFIGURATION (v2.0.0)
-# ==============================================================================
-CUSTOM_COLOR_LOGS_INITIALIZED                = true
+Вам больше не нужно вручную описывать интерфейсы для динамических методов (таких как `print.ServerInfo` или `print.DatabaseError`). Благодаря продвинутой маппинг-типизации TypeScript автоматически распознает все 40+ комбинаций компонентов и методов.
 
-# --- Управление поведением логов ---
-SHOW_START_LOG                               = true
-SHOW_MODULE_LOGS                             = false
-SHOW_END_LOG                                 = true
-SHOW_TIME_AT_LOG                             = true
+### Пример использования в TS:
 
-# --- Основные статусы сообщений ---
-INFO                                         = "@info"
-INFO_COLOR                                   = "Blue"
-WARNING                                      = "@warn"
-WARNING_COLOR                                = "Orange"
-ERROR                                        = "@error"
-ERROR_COLOR                                  = "Red"
-TIME_COLOR                                   = "White"
+```typescript
+import { print } from "custom-color-logs";
 
-# --- Функции и логика компонентов ---
-NAME_FUNCTION_COLOR                          = "Lime"
-CUSTOM_TEXT_TO_FUNCTION_COLOR                = "Gray"
-POSITIVE_COLOR                               = "Green"
-NEGATIVE_COLOR                               = "Orange"
+// 🚀 Полная поддержка автодополнения (IntelliSense) прямо в редакторе!
+print.ServerInfo("Информационное сообщение сервера");
+
+// Защита от дурака: аргументы сообщений типизированы как `any`. 
+// Вы можете безопасно передавать сложные объекты, типы не "заругаются":
+interface UserData {
+  id: number;
+  name: string;
+}
+
+const user: UserData = { id: 1, name: "Иван" };
+print.DatabaseInfo(user); // TS идеально поймет этот вызов
 ```
 
-> 💡 **Совет:** Если вы хотите вернуть настройки по умолчанию, просто удалите этот блок настроек из файла `.env` (при следующем запуске он сгенерируется заново).
+### Безопасность типов (Readonly)
+Экспортируемый объект `print` защищен на уровне компиляции модификатором `Readonly`. Это означает, что сторонний код вашего проекта не сможет случайно перезаписать методы логгера (например, действие `print.ServerInfo = null` вызовет ошибку компиляции).
 
 ---
 
-## 📂 Логирование сбоев (Error Logs)
+## 📝 [Лицензия](LICENSE)
 
-При возникновении непредвиденной ошибки в коде вашего приложения логгер автоматически перехватит её, уберет лишние строки внутренних модулей Node.js (из `node_modules` и `node:internal`), после чего сформирует красивую запись в файле `./logs/errors.log`:
+ISC © prm-programmer
 
-```text
-------------------------------[ 05.09.2026, 20:15:30 ]------------------------------
-TYPE: UNCAUGHT_EXCEPTION
-MESSAGE: Критический сбой базы данных
-STACK:
-Error: Критический сбой базы данных
-    at Object.<anonymous> (D:\project\test-logger.js:18:24)
-------------------------------------------------------------------------------------
-```
+* 👋 **Контакты:** [GitHub](https://github.com) | [npm Profile](https://npmjs.com)
+* 📧 **Почта:** [p7841744@gmail.com](mailto:p7841744@gmail.com)
+* 📱 **Viber:** [+375 (44) 521-45-73](viber://chat?number=+375445214573)
 
----
-
-## 🛠 Разработка и тестирование (Development)
-
-Для локального запуска и доработки проекта выполните следующие команды:
-
-```bash
-git clone https://github.com/RPM-programmer/custom-color-logs.git
-cd custom-color-logs
-npm install custom-color-logs
-node test.js
-```
-
-## 📄 Лицензия (License)
-
-[MIT](LICENSE) © RPM-programmer
-* [На GitHub](https://github.com/RPM-programmer/custom-color-logs/blame/main/LICENSE)
-* [На npm](https://www.npmjs.com/package/custom-color-logs/v/2.0.0-beta.3?activeTab=code)
+### 🐛 Нашли ошибку? 
+Пишите на [Gmail](mailto:p7841744@gmail.com?subject=Нахождение%20ошибки%20в%20коде&body=Здраствуйте!%20Я%20обнаружил%20ошибку%20в%20коде.%20Она%20появляется%20если%20вызвать%20%28название%20фунции%29.%20Вот%20лог%20ошибки%3A%20%28лог%29%3B%20код%3A%20%28код%20файла%20где%20появляется%20ошибка%29) или в [Viber](viber://chat?number=+375445214573). Пожалуйста, приложите логи и участок кода, вызывающий сбой.

@@ -6,41 +6,61 @@ const process = require('process');
 const envPath = path.resolve(process.cwd(), '.env');
 
 // Дефолтный блок настроек с уникальным маркером безопасности
-const defaultEnvContent = `# ==============================================================================
-# 🎨 CUSTOM-COLOR-LOGS CONFIGURATION (v2.0.0)
+const defaultEnvContent = `
+# ==============================================================================
+# 🎨 CUSTOM-COLOR-LOGS CONFIGURATION (v3.0.0)
 # ==============================================================================
 CUSTOM_COLOR_LOGS_INITIALIZED                = true
 
+# ⚙️ ОСНОВНЫЕ СИСТЕМНЫЕ НАСТРОЙКИ
+# ------------------------------------------------------------------------------
 SHOW_START_LOG                               = true
-SHOW_MODULE_LOGS                             = false
+SHOW_MODULE_LOGS                             = true
 SHOW_END_LOG                                 = true
 SHOW_TIME_AT_LOG                             = true
 
+# 🧩 СИСТЕМНЫЕ СВЯЗУЮЩИЕ ЗНАКИ И ЦВЕТА
+# ------------------------------------------------------------------------------
 AND                                          = " "
 AND_COLOR                                    = Black
 TO                                           = ":"
 TO_COLOR                                     = Blue
-COLOR                                        = Gray
-TIME_COLOR                                   = White
 
+# 🖌️ НАСТРОЙКА УМНОГО ОКРАШИВАНИЯ СТРОК И ОБЪЕКТОВ (ФИЧА v3.0.0)
+# ------------------------------------------------------------------------------
+COLOR                                        = Gray     # Цвет для обычного Info текста
+TIME_COLOR                                   = White    # Цвет времени [12:00:00]
+KEY_COLOR                                    = Magenta  # Цвет ключей объектов (например, name, id)
+VALUE_COLOR                                  = Yellow   # Цвет значений (например, "Иван", 777)
+
+# 📢 ГЛОБАЛЬНЫЕ СТАТУСНЫЕ ТЕГИ И ЦВЕТА СоОБЩЕНИЙ
+# ------------------------------------------------------------------------------
 INFO                                         = "@info"
 INFO_COLOR                                   = Blue
 WARNING                                      = "@warn"
 WARNING_COLOR                                = Orange
 ERROR                                        = "@error"
 ERROR_COLOR                                  = Red
+
+# 🚨 КРИТИЧЕСКИЕ ОШИБКИ И ПЕРЕХВАТЧИКИ PROCESS
+# ------------------------------------------------------------------------------
 CUSTOM_ERROR_MESSAGE                         = "Error!"
 CUSTOM_ERROR_MESSAGE_COLOR                   = Orange
+ERROR_STACK_COLOR                            = Red      # Название переменной для safeChalk в Error
 
+# 📦 НАСТРОЙКИ ДЛЯ ЛОГИРОВАНИЯ ВНУТРЕННИХ ФУНКЦИЙ
+# ------------------------------------------------------------------------------
 FUNCTION_INFO                                = "@function-info"
 FUNCTION_INFO_COLOR                          = Blue
-NAME_FUNCTION_COLOR                          = Lime
-CUSTOM_TEXT_TO_FUNCTION_COLOR                = Gray
+NAME_FUNCTION_COLOR                          = Lime     # Цвет скобок функции [-authCheck-]
+CUSTOM_TEXT_TO_FUNCTION_COLOR                = Gray     # Цвет описания работы функции
 LOG                                          = "@function-log"
 LOG_COLOR                                    = Blue
 STATUS                                       = "@function-status"
 STATUS_COLOR                                 = Blue
 
+# 📈 МЕТРИКИ ПРОИЗВОДИТЕЛЬНОСТИ (PERFORMANCE)
+# ------------------------------------------------------------------------------
 POSITIVE                                     = "@function-positive-performance"
 POSITIVE_COLOR                               = Green
 PNAME_COLOR                                  = Lime
@@ -48,14 +68,19 @@ NEGATIVE                                     = "@function-negative-performance"
 NEGATIVE_COLOR                               = Orange
 NNAME_COLOR                                  = Lime
 
+# ✉️ СЕРВИС ОТПРАВКИ ПОЧТЫ (NODEMAILER)
+# ------------------------------------------------------------------------------
 POSITIVE_SEND                                = "@send-status-true"
 POSITIVE_SEND_COLOR                          = Green
 NEGATIVE_SEND                                = "@send-status-false"
 NEGATIVE_SEND_COLOR                          = Orange
 GMAIL_COLOR                                  = Lime
 
-MODULE_TEXT                                  = "[ LOGGER ]"
-MODULE_TEXT_COLOR                            = SkyBlue
+# 🏗️ ИЕРАРХИЯ ПРЕФИКСОВ (КОМПОНЕНТЫ И МОДУЛИ)
+# ------------------------------------------------------------------------------
+PREFIX_TEXT                                  = "SYSTEM"
+PREFIX_TEXT_COLOR                            = Blue
+
 SERVER_TEXT                                  = "SERVER"
 SERVER_TEXT_COLOR                            = Blue
 SOCKET_TEXT                                  = "SOCKET"
@@ -66,9 +91,14 @@ DATABASE_TEXT                                = "DATABASE"
 DATABASE_TEXT_COLOR                          = Green
 NODEMAILER_TEXT                              = "NODEMAILER"
 NODEMAILER_TEXT_COLOR                        = Purple
+
 MODULES_TEXT                                 = "NODE-MODULES"
 MODULES_TEXT_COLOR                           = Lime
+MODULE_TEXT                                  = "[ LOGGER ]"
+MODULE_TEXT_COLOR                            = SkyBlue
 
+# 🚀 СТАРТОВЫЕ И ФИНАЛЬНЫЕ СООБЩЕНИЯ МОДУЛЕЙ
+# ------------------------------------------------------------------------------
 CUSTOM_MODULE_START_MESSAGE                  = "Code is ran!"
 CUSTOM_MODULES_START_MESSAGE                 = "Module is ran!"
 CUSTOM_MODULES_START_MESSAGE_IF_ISNT_MODULES = "No active neighbor modules found."

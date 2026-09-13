@@ -1,66 +1,69 @@
 export interface ComponentMethods {
-  Info(info: string): string;
-  Error(error: Error | { message: string }): string;
-  Warn(warn: string): string;
-  FunctionInfo(funName: string, info: string): string;
-  FunctionStatus(function_name: string, return_info: string): string;
-  FunctionPrint(funName: string, text: string): string;
-  FunctionPositivePerformance(funName: string, text: string): string;
-  FunctionNegativePerformance(funName: string, text: string): string;
+  Info(info: any): string;
+  Error(error: any): string;
+  Warn(warn: any): string;
+  FunctionInfo(funName: string, info: any): string;
+  FunctionStatus(function_name: string, return_info: any): string;
+  FunctionPrint(funName: string, text: any): string;
+  FunctionPositivePerformance(funName: string, text: any): string;
+  FunctionNegativePerformance(funName: string, text: any): string;
 }
 
-export declare class print {
+export interface PrintInterface {
   // --- Server ---
-  static ServerInfo(info: string): string;
-  static ServerError(error: Error | { message: string }): string;
-  static ServerWarn(warn: string): string;
-  static ServerFunctionInfo(funName: string, info: string): string;
-  static ServerFunctionStatus(function_name: string, return_info: string): string;
-  static ServerFunctionPrint(funName: string, text: string): string;
-  static ServerFunctionPositivePerformance(funName: string, text: string): string;
-  static ServerFunctionNegativePerformance(funName: string, text: string): string;
+  ServerInfo(info: any): string;
+  ServerError(error: any): string;
+  ServerWarn(warn: any): string;
+  ServerFunctionInfo(funName: string, info: any): string;
+  ServerFunctionStatus(function_name: string, return_info: any): string;
+  ServerFunctionPrint(funName: string, text: any): string;
+  ServerFunctionPositivePerformance(funName: string, text: any): string;
+  ServerFunctionNegativePerformance(funName: string, text: any): string;
 
   // --- Socket ---
-  static SocketInfo(info: string): string;
-  static SocketError(error: Error | { message: string }): string;
-  static SocketWarn(warn: string): string;
-  static SocketFunctionInfo(funName: string, info: string): string;
-  static SocketFunctionStatus(function_name: string, return_info: string): string;
-  static SocketFunctionPrint(funName: string, text: string): string;
-  static SocketFunctionPositivePerformance(funName: string, text: string): string;
-  static SocketFunctionNegativePerformance(funName: string, text: string): string;
+  SocketInfo(info: any): string;
+  SocketError(error: any): string;
+  SocketWarn(warn: any): string;
+  SocketFunctionInfo(funName: string, info: any): string;
+  SocketFunctionStatus(function_name: string, return_info: any): string;
+  SocketFunctionPrint(funName: string, text: any): string;
+  SocketFunctionPositivePerformance(funName: string, text: any): string;
+  SocketFunctionNegativePerformance(funName: string, text: any): string;
 
   // --- Writter ---
-  static WritterInfo(info: string): string;
-  static WritterError(error: Error | { message: string }): string;
-  static WritterWarn(warn: string): string;
-  static WritterFunctionInfo(funName: string, info: string): string;
-  static WritterFunctionStatus(function_name: string, return_info: string): string;
-  static WritterFunctionPrint(funName: string, text: string): string;
-  static WritterFunctionPositivePerformance(funName: string, text: string): string;
-  static WritterFunctionNegativePerformance(funName: string, text: string): string;
+  WritterInfo(info: any): string;
+  WritterError(error: any): string;
+  WritterWarn(warn: any): string;
+  WritterFunctionInfo(funName: string, info: any): string;
+  WritterFunctionStatus(function_name: string, return_info: any): string;
+  WritterFunctionPrint(funName: string, text: any): string;
+  WritterFunctionPositivePerformance(funName: string, text: any): string;
+  WritterFunctionNegativePerformance(funName: string, text: any): string;
 
   // --- Database ---
-  static DatabaseInfo(info: string): string;
-  static DatabaseError(error: Error | { message: string }): string;
-  static DatabaseWarn(warn: string): string;
-  static DatabaseFunctionInfo(funName: string, info: string): string;
-  static DatabaseFunctionStatus(function_name: string, return_info: string): string;
-  static DatabaseFunctionPrint(funName: string, text: string): string;
-  static DatabaseFunctionPositivePerformance(funName: string, text: string): string;
-  static DatabaseFunctionNegativePerformance(funName: string, text: string): string;
+  DatabaseInfo(info: any): string;
+  DatabaseError(error: any): string;
+  DatabaseWarn(warn: any): string;
+  DatabaseFunctionInfo(funName: string, info: any): string;
+  DatabaseFunctionStatus(function_name: string, return_info: any): string;
+  DatabaseFunctionPrint(funName: string, text: any): string;
+  DatabaseFunctionPositivePerformance(funName: string, text: any): string;
+  DatabaseFunctionNegativePerformance(funName: string, text: any): string;
 
   // --- Nodemailer ---
-  static NodemailerInfo(info: string): string;
-  static NodemailerError(error: Error | { message: string }): string;
-  static NodemailerWarn(warn: string): string;
-  static NodemailerFunctionInfo(funName: string, info: string): string;
-  static NodemailerFunctionStatus(function_name: string, return_info: string): string;
-  static NodemailerFunctionPrint(funName: string, text: string): string;
-  static NodemailerFunctionPositivePerformance(funName: string, text: string): string;
-  static NodemailerFunctionNegativePerformance(funName: string, text: string): string;
-  static NodemailerFunctionPositiveSending(gmail: string): string;
-  static NodemailerFunctionNegativeSending(gmail: string): string;
+  NodemailerInfo(info: any): string;
+  NodemailerError(error: any): string;
+  NodemailerWarn(warn: any): string;
+  NodemailerFunctionInfo(funName: string, info: any): string;
+  NodemailerFunctionStatus(function_name: string, return_info: any): string;
+  NodemailerFunctionPrint(funName: string, text: any): string;
+  NodemailerFunctionPositivePerformance(funName: string, text: any): string;
+  NodemailerFunctionNegativePerformance(funName: string, text: any): string;
+  NodemailerFunctionPositiveSending(gmail: string): string;
+  NodemailerFunctionNegativeSending(gmail: string): string;
 }
+
+// Защита: экспортируем как неизменяемую константу-объект
+export const print: Readonly<PrintInterface>;
 
 export default print;

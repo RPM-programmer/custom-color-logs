@@ -3,7 +3,7 @@ require("./setupEnv.js");
 require("dotenv").config();
 const chalk = require("./chalk-palette.js");
 
-// Функция безопасного окрашивания с поддержкой CamelCase (например, skyblue -> SkyBlue)
+// Функция безопасного окрашивания с поддержкой CamelCase
 const safeColor = (rawColorName, text) => {
     if (!text) return '';
     if (!rawColorName) return text;
