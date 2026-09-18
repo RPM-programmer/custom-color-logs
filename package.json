@@ -1,11 +1,12 @@
 {
   "name": "custom-color-logs",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0",
   "description": "Продвинутая и гибкая система логирования для Node.js с безопасной обработкой цвета окружения.",
   "keywords": [
     "color",
     "logger",
-    "chalk"
+    "chalk",
+    "custom"
   ],
   "homepage": "https://github.com/RPM-programmer/custom-color-logs#readme",
   "bugs": {
