@@ -16,3 +16,4 @@ Thumbs.db
 .github/
 .vscode/
 .idea/
+.npmrc

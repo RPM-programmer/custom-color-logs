@@ -2,25 +2,31 @@
   "name": "custom-color-logs",
   "version": "3.0.0",
   "description": "Продвинутая и гибкая система логирования для Node.js с безопасной обработкой цвета окружения.",
+  "main": "./index.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./index.d.mts",
+        "default": "./index.mjs"
+      },
+      "require": {
+        "types": "./index.d.ts",
+        "default": "./index.js"
+      }
+    }
+  },
   "keywords": [
     "color",
     "logger",
     "chalk",
-    "custom"
+    "custom",
+    "esm",
+    "commonjs"
   ],
-  "homepage": "https://github.com/RPM-programmer/custom-color-logs#readme",
-  "bugs": {
-    "url": "https://github.com/RPM-programmer/custom-color-logs/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/RPM-programmer/custom-color-logs.git"
-  },
   "license": "ISC",
   "author": "prm-programmer",
-  "type": "commonjs",
-  "main": "index.js",
   "dependencies": {
+    "chalk-palette": "^2.0.0",
     "dotenv": "^17.4.2"
   }
 }

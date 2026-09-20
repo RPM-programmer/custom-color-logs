@@ -1,6 +1,13 @@
 require("dotenv").config();
 const loggerPath = "./index.js";
+
+// Явно указываем редактору тип для деструктурируемого объекта
+/** @type {import('./index.d.ts')} */
 const { print } = require(loggerPath);
+
+// Теперь проверяем динамику:
+print.RedisInfo("Успешно"); 
+print.TelegramWarn("Внимание");
 
 console.log("\n" + "=".repeat(20) + " ТЕСТ ВАШИХ СТИЛЕЙ ИЗ .ENV " + "=".repeat(20) + "\n");
 
@@ -46,3 +53,8 @@ console.log("\n" + "=".repeat(23) + " КОНЕЦ ТЕСТИРОВАНИЯ " + "=
 
 // Прямой вызов оригинального консоль-лога для проверки перехвата patch.js
 console.log("Обычный console.log с объектом:", { status: "работает", версия: "2.0.0" });
+
+
+console.log(print.ServerInfo("hello"))
+
+console.log(print.ServerBotLoggerInfo("hello"))
