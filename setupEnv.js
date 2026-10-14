@@ -1,15 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 const process = require('process');
-
-// Определяем путь к .env файлу в корне проекта пользователя
 const envPath = path.resolve(process.cwd(), '.env');
-
-// Дефолтный блок настроек с уникальным маркером безопасности
 const defaultEnvContent = `
 
+
 # ==============================================================================
-# 🎨 CUSTOM-COLOR-LOGS CONFIGURATION (v3.0.0)
+# 🎨 CUSTOM-COLOR-LOGS CONFIGURATION (v3.2.0)
 # ==============================================================================
 CUSTOM_COLOR_LOGS_INITIALIZED                = true
 
@@ -34,6 +31,13 @@ TIME_COLOR                                   = White    # Цвет времен�
 KEY_COLOR                                    = Magenta  # Цвет ключей объектов (например, name, id)
 VALUE_COLOR                                  = Yellow   # Цвет значений (например, "Иван", 777)
 
+# 🔈 НАСТРОЙКА ЗВУКОВЫХ ЭФФЕКТОВ (ФИЧА 3.2.0)
+# ------------------------------------------------------------------------------
+PLAY_ERROR_SOUND                             = false # Проигрывать при ошибке уведомление
+ERROR_SOUND_TYPE                             = windows-xp  # звук — "windows-xp", "bios", "custom" (!!!  При выборе "custom" при ошибке будет проигрываться ваш звук! — Настройка пути к звуку в CUSTOM_SOUND_PATH )
+CUSTOM_SOUND_PATH                            = "" # путь к вашему звуковому файлу
+
+
 # 📢 ГЛОБАЛЬНЫЕ СТАТУСНЫЕ ТЕГИ И ЦВЕТА СоОБЩЕНИЙ
 # ------------------------------------------------------------------------------
 INFO                                         = "@info"
@@ -47,7 +51,7 @@ ERROR_COLOR                                  = Red
 # ------------------------------------------------------------------------------
 CUSTOM_ERROR_MESSAGE                         = "Error!"
 CUSTOM_ERROR_MESSAGE_COLOR                   = Orange
-ERROR_STACK_COLOR                            = Red      # Название переменной для safeChalk в Error
+ERROR_STACK_COLOR                            = Red
 
 # 📦 НАСТРОЙКИ ДЛЯ ЛОГИРОВАНИЯ ВНУТРЕННИХ ФУНКЦИЙ
 # ------------------------------------------------------------------------------
@@ -113,34 +117,25 @@ CUSTOM_MODULE_STOP_MESSAGE                   = "Code is stop!"
 CUSTOM_MODULES_STOP_MESSAGE                  = "Module is stoped!"
 CUSTOM_MODULES_STOP_MESSAGE_IF_ISNT_MODULES  = "No active neighbor modules found."
 CUSTOM_MODULES_STOP_MESSAGE_COLOR           = Gray
+
 `;
 
 function initializeEnvironment() {
     try {
         if (!fs.existsSync(envPath)) {
-            // Если .env файла нет совсем — создаем и записываем дефолтный конфиг с тегом
             fs.writeFileSync(envPath, defaultEnvContent, 'utf8');
         } else {
-            // Если файл есть, читаем его содержимое
             const currentEnv = fs.readFileSync(envPath, 'utf8');
-            
-            // СТРОГАЯ ПРОВЕРКА ТЕГА: если маркер инициализации уже внутри файла, полностью выходим
             if (currentEnv.includes('CUSTOM_COLOR_LOGS_INITIALIZED')) {
                 require("dotenv").config({ path: envPath });
                 return;
             }
-            
-            // Если тега нет (конфиг логгера еще не добавлялся), аккуратно дописываем в конец
             fs.appendFileSync(envPath, `\n\n${defaultEnvContent}`, 'utf8');
         }
     } catch (err) {
         console.error('⚠️ [custom-color-logs] Не удалось проверить или обновить .env:', err.message);
     }
-
-    // Загружаем обновленные или созданные переменные в process.env
     require("dotenv").config({ path: envPath });
 }
-
 initializeEnvironment();
-
 module.exports = { envPath };

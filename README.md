@@ -1,23 +1,24 @@
-# 🎨 custom-color-logs (v3.1.0)
+# 🎨 custom-color-logs (v3.2.0)
 
-> Продвинутая, легковесная и абсолютно отказоустойчивая (**Poka-yoke**) система логирования для Node.js с динамической кастомизацией цветов и поддержкой Proxy-префиксов через `.env`.
+> Продвинутая, легковесная и абсолютно отказоустойчивая (**Poka-yoke**) система логирования для Node.js с динамической кастомизацией цветов и поддержкой Proxy-префиксов через `.env`, а также поддержка звуков.
 
 ---
 
 [<img src="https://img.icons8.ru/?size=100&id=24895&format=png&color=000000" height="60" align="center"> npm versions](https://www.npmjs.com/package/custom-color-logs?activeTab=versions)
-[<img src="https://img.icons8.ru/?size=100&id=24895&format=png&color=000000" height="60" align="center"> На npm](https://www.npmjs.com/package/custom-color-logs/v3.1.0)
+[<img src="https://img.icons8.ru/?size=100&id=24895&format=png&color=000000" height="60" align="center"> На npm](https://www.npmjs.com/package/custom-color-logs/v3.2.0)
 [<img src="https://img.icons8.ru/?size=100&id=12599&format=png&color=000000" height="60" align="center"> На GitHub](https://github.com/RPM-programmer/custom-color-logs)
 [<img src="https://img.icons8.ru/?size=100&id=dvsOEzqniDma&format=png&color=000000" height="60" align="center"> License](LICENSE)
 
 ---
 
-## ⚡️ Ключевые фичи v3.1.0 (The Smart Dynamic Update)
+## ⚡️ Ключевые фичи v3.2.0 (The Smart Dynamic Update)
 
 *  **Магия Proxy (Бесконечные префиксы):** Больше не нужно настраивать компоненты внутри библиотеки. Логгер на лету подхватывает любые имена: `print.RedisInfo`, `print.KafkaWarn`.
 *  **Умный парсинг CamelCase:** При вызове сложных цепочек вроде `print.DatabaseTelegramWarn` логгер автоматически разобьет имя на красивую иерархию префиксов `SYSTEM:SERVER:DATABASE:TELEGRAM:`.
 *  **Единая палитра для кастомных префиксов:** Управляйте цветом и регистром всех динамических модулей всего двумя переменными в `.env`.
 *  **Умная раскраска объектов:** Автоматически парсит объекты и массивы. Ключи (properties) и значения (values) красятся в РАЗНЫЕ цвета.
 *  **Гибридный пакет (Dual-Package):** Из коробки поддерживает как старый **CommonJS (`require`)**, так и современный **ESM (`import`)**.
+*  **Поддержка звука** При ошибке проигрывается звук (можно настроить)
 
 ---
 
@@ -26,12 +27,19 @@
 При первом запуске логгер автоматически создаст или дополнит ваш файл `.env`. Новые переменные для управления кастомными префиксами:
 
 ```env
+# Настройка звука при ошибке (Фича v3.2.0)
+# ------------------------------------------------------------------------------
+PLAY_ERROR_SOUND                             = false # Проигрывать при ошибке уведомление (по умочанию false)
+ERROR_SOUND_TYPE                             = windows-xp  # звук — "windows-xp", "bios", "custom" (!!!  При выборе "custom" при ошибке будет проигрываться ваш звук! — Настройка пути к звуку в CUSTOM_SOUND_PATH )
+CUSTOM_SOUND_PATH                            = "" # путь к вашему звуковому файлу
+
 #  НАСТРОЙКА ДЛЯ ЛЮБЫХ КАСТОМНЫХ ПРЕФИКСОВ (Фича v3.1.0)
 # ------------------------------------------------------------------------------
 CUSTOM_PREFIX_TEXT_COLOR                     = Cyan     # Цвет для ВСЕХ динамических префиксов (Redis, Telegram и т.д.)
 CUSTOM_PREFIX_TEXT_CASE                      = Upper    # Регистр: Upper (по умолчанию), Lower или AsIs (как в коде)
 
 # Настройка умного окрашивания объектов (Фича v3.0.0)
+# ------------------------------------------------------------------------------
 KEY_COLOR=Magenta      # Цвет для ключей (например, name, age)
 VALUE_COLOR=Yellow     # Цвет для значений (например, "Иван", 25)
 COLOR=Gray             # Цвет для обычного текста лога
@@ -101,3 +109,7 @@ ISC © prm-programmer
 
 ###  Нашли ошибку? 
 Пишите на [Gmail](mailto:p7841744@gmail.com?subject=Нахождение%20ошибки%20в%20коде&body=Здраствуйте!%20Я%20обнаружил%20ошибку%20в%20коде.%20Она%20появляется%20если%20вызвать%20%28название%20фунции%29.%20Вот%20лог%20ошибки%3A%20%28лог%29%3B%20код%3A%20%28код%20файла%20где%20появляется%20ошибка%29) или в [Viber](viber://chat?number=+375445214573). Пожалуйста, приложите логи и участок кода, вызывающий сбой.
+
+
+## Зависимости и сторонний код (Third-Party Code)
+* Часть алгоритма проверки опечаток использует оптимизированную функцию подсчета расстояния Левенштейна из библиотеки [fastest-levenshtein](https://github.com/ka-weihe/fastest-levenshtein) (Лицензия MIT, Copyright (c) 2020 ka-weihe).

@@ -1,10 +1,11 @@
-const converter = require("./converter.js"); //
-const errorsFile = "./logs/errors.log"; //
-const fs = require("fs"); //
-const path = require("path"); //
-const process = require("process"); //
-require("dotenv").config(); //
-const { safeChalk, formatAndCleanStack } = require("./utils.js"); // ИСПРАВЛЕНО: импорт утилит
+const path = require("path");
+const converter = require(path.join(__dirname, "converter.js"));
+const errorsFile = path.join(__dirname, "logs", "errors.log");
+const fs = require("fs");
+const process = require("process");
+require("dotenv").config();
+const { safeChalk, formatAndCleanStack } = require(path.join(__dirname, "utils.js"));
+const musicPlayer = require(path.join(__dirname, "music.js"));
 
 function getSafeString(key, fallback = '') {
     return converter && converter[key] ? converter[key] : fallback; //
@@ -36,7 +37,11 @@ process.on("uncaughtException", (error) => {
     console.error(`${server}${to}${and}${errorKey}${and}${safeChalk('CUSTOM_ERROR_MESSAGE_COLOR', customMessage)}\n${safeChalk('ERROR_COLOR', cleanStack)}`); //
     
     saveErrorLogSync("UNCAUGHT_EXCEPTION", error ? error.message : '', `STACK:\n${cleanStack}`); //
-    process.exit(1); //
+    musicPlayer.playErrorSound();
+    setTimeout(() => {
+        process.exit(1);
+    }, 1000);
+
 });
 
 process.on('unhandledRejection', (reason, promise) => {
@@ -52,5 +57,8 @@ process.on('unhandledRejection', (reason, promise) => {
     console.error(`${server}${to}${and}${errorKey}${and}${safeChalk('CUSTOM_ERROR_MESSAGE_COLOR', customMessage)}\n${safeChalk('COLOR', cleanStack)}`); //
     
     saveErrorLogSync("UNHANDLED_REJECTION", errorMessage, `STACK:\n${cleanStack}`); //
-    process.exit(1); //
+    musicPlayer.playErrorSound();
+    setTimeout(() => {
+        process.exit(1);
+    }, 1000);
 });

@@ -22,3 +22,43 @@ STACK:
 ReferenceError: heersnmm is not defined
     at Object.<anonymous> (/home/pl/Desktop/custom-color-logs/test.js:51:5)
 ----------------------------------------------------------------------
+
+------------------------------[ 14.10.2026, 19:14:15 ]------------------------------
+TYPE: UNCAUGHT_EXCEPTION
+MESSAGE: path is not defined
+STACK:
+ReferenceError: path is not defined
+    at Object.<anonymous> (/home/pl/Desktop/custom-color-logs/test.js:7:29)
+----------------------------------------------------------------------
+
+------------------------------[ 14.10.2026, 19:33:40 ]------------------------------
+TYPE: UNCAUGHT_EXCEPTION
+MESSAGE: Тестовая фейковая ошибка для проверки звука и логов!
+STACK:
+Error: Тестовая фейковая ошибка для проверки звука и логов!
+    at Object.<anonymous> (/home/pl/Desktop/custom-color-logs/test.js:63:7)
+----------------------------------------------------------------------
+
+------------------------------[ 14.10.2026, 19:34:06 ]------------------------------
+TYPE: UNCAUGHT_EXCEPTION
+MESSAGE: Тестовая фейковая ошибка для проверки звука и логов!
+STACK:
+Error: Тестовая фейковая ошибка для проверки звука и логов!
+    at Object.<anonymous> (/home/pl/Desktop/custom-color-logs/test.js:63:7)
+----------------------------------------------------------------------
+
+------------------------------[ 14.10.2026, 19:34:17 ]------------------------------
+TYPE: UNCAUGHT_EXCEPTION
+MESSAGE: Тестовая фейковая ошибка для проверки звука и логов!
+STACK:
+Error: Тестовая фейковая ошибка для проверки звука и логов!
+    at Object.<anonymous> (/home/pl/Desktop/custom-color-logs/test.js:63:7)
+----------------------------------------------------------------------
+
+------------------------------[ 14.10.2026, 19:34:29 ]------------------------------
+TYPE: UNCAUGHT_EXCEPTION
+MESSAGE: руддщ is not defined
+STACK:
+ReferenceError: руддщ is not defined
+    at Object.<anonymous> (/home/pl/Desktop/custom-color-logs/test.js:61:1)
+----------------------------------------------------------------------

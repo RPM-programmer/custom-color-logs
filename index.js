@@ -1,10 +1,10 @@
-require("./patch.js"); 
-
+const path = require("path");
+require(path.join(__dirname, "patch.js")); 
 const process = require("process"); 
-const converter = require("./converter.js"); 
+const converter = require(path.join(__dirname, "converter.js")); 
 require("dotenv").config(); 
 
-const { safeChalk, bypassResetCode } = require("./utils.js");
+const { safeChalk, bypassResetCode } = require(path.join(__dirname ,"utils.js"));
 
 function getSafeString(key, fallback = '') {
     return converter && converter[key] ? converter[key] : fallback; 

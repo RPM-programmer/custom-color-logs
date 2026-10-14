@@ -1,7 +1,8 @@
+const path = require("path");
 require("dotenv").config(); //
 const process = require("process"); //
 const chalk = require("chalk-palette"); //
-const { safeChalk } = require("./utils.js"); // Используем стандартизированный метод
+const { safeChalk } = require(path.join(__dirname, "utils.js")); // Используем стандартизированный метод
 
 function getSafeColorMethod(envValue, defaultColor) {
     if (!envValue) return defaultColor; //

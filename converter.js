@@ -1,4 +1,5 @@
-require("./setupEnv.js"); //
+const path = require("path");
+require(path.join(__dirname, "setupEnv.js")); //
 require("dotenv").config(); //
 const { safeChalk } = require("./utils.js"); // Подключаем общую утилиту
 

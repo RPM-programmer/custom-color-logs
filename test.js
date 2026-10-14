@@ -1,11 +1,9 @@
 require("dotenv").config();
 const loggerPath = "./index.js";
-
-// Явно указываем редактору тип для деструктурируемого объекта
 /** @type {import('./index.d.ts')} */
+const path = require("path")
 const { print } = require(loggerPath);
-
-// Теперь проверяем динамику:
+const musicPlayer = require(path.join(__dirname, "music.js"));
 print.RedisInfo("Успешно"); 
 print.TelegramWarn("Внимание");
 
