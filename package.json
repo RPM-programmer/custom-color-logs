@@ -1,6 +1,6 @@
 {
   "name": "custom-color-logs",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Продвинутая и гибкая система логирования для Node.js с безопасной обработкой цвета окружения и поддержкой звука.",
   "main": "./index.js",
   "exports": {
