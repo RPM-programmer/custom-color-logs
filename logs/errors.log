@@ -62,3 +62,19 @@ STACK:
 ReferenceError: руддщ is not defined
     at Object.<anonymous> (/home/pl/Desktop/custom-color-logs/test.js:61:1)
 ----------------------------------------------------------------------
+
+------------------------------[ 14.10.2026, 20:01:06 ]------------------------------
+TYPE: UNCAUGHT_EXCEPTION
+MESSAGE: hellolo
+STACK:
+Error: hellolo
+    at Object.<anonymous> (/home/pl/Desktop/custom-color-logs/test.js:60:7)
+----------------------------------------------------------------------
+
+------------------------------[ 14.10.2026, 20:01:27 ]------------------------------
+TYPE: UNCAUGHT_EXCEPTION
+MESSAGE: hellolo
+STACK:
+Error: hellolo
+    at Object.<anonymous> (/home/pl/Desktop/custom-color-logs/test.js:60:7)
+----------------------------------------------------------------------
